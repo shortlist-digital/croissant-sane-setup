@@ -1,5 +1,5 @@
 {
-    "name": "ShortlistMedia/wp-sane-setup",
+    "name": "ShortlistMedia/croissant-sane-setup",
     "type": "wordpress-plugin",
     "description": "Make some sensible setup changes to a new WordPress installation",
     "version": "0.2.2",
