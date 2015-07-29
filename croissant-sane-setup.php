@@ -18,13 +18,13 @@ class SaneSetup  {
 
   function decide_to_run() {
     if ($this->check_for_run_option()) {
-      $this->show_notice('Sane Setup has configured WordPress. <a href="'.admin_url().'?sane_setup_action=deactivate_sane_setup">Deactivate the Sane Setup plugin to remove this message</a>', 'updated'); 
+      $this->show_notice('Sane Setup has configured WordPress. <a href="'.admin_url().'?sane_setup_action=deactivate_sane_setup">Deactivate the Sane Setup plugin to remove this message</a>', 'updated');
       if ($this->get_sane_setup_action()  == 'deactivate_sane_setup') {
         $this->deactivate_self();
       }
 
     } else {
-      $this->show_notice('Sane Setup has not been run yet. <a href="'.admin_url().'?sane_setup_action=run_sane_setup">Run Sane Setup now</a>', 'error'); 
+      $this->show_notice('Sane Setup has not been run yet. <a href="'.admin_url().'?sane_setup_action=run_sane_setup">Run Sane Setup now</a>', 'error');
 
       if ($this->get_sane_setup_action()  == 'run_sane_setup') {
         $this->do_setup();
@@ -46,7 +46,7 @@ class SaneSetup  {
       return true;
     } else {
       return false;
-    } 
+    }
   }
 
   function deactivate_self() {
@@ -71,23 +71,23 @@ class SaneSetup  {
   }
 
   function disable_emojis() {
-    update_option( 'use_smilies', 0 ); 
+    update_option( 'use_smilies', 0 );
   }
 
   function update_permalinks() {
-    update_option( 'selection','custom' ); 
-    update_option( 'permalink_structure','/%category%/%postname%' ); 
+    update_option( 'selection','custom' );
+    update_option( 'permalink_structure','/%category%/%postname%' );
   }
 
   function set_start_of_week() {
-     update_option( 'start_of_week', 1 ); 
+     update_option( 'start_of_week', 1 );
   }
-  
+
   function sensible_category() {
     // Get rid of 'Uncategorised' category and replace with 'Blog' as default
       wp_update_term(1, 'category', array(
         'name' => 'News',
-        'slug' => 'news', 
+        'slug' => 'news',
         'description' => 'News'
       ));
   }
@@ -118,6 +118,40 @@ class SaneSetup  {
       $wpdb->insert( $wpdb->postmeta, array( 'post_id' => 1, 'meta_key' => '_wp_page_template', 'meta_value' => 'default' ) );
 
     }
+  }
+
+  function create_list() {
+
+    $lists = get_posts(array('post_type' => 'list'));
+    if(count($lists) >= 1) {
+      return;
+    }
+    // If list not registered post type then return.
+    $types = get_post_types();
+    if(!in_array('list', $types)){
+      $this->show_notice('Sane setup could not create a List because Custom Post Type of List is not registered. Is the Croissant theme activated yet?', 'updated error');
+      return;
+    }
+
+    $first_list_guid = get_option('home') . '/?post_type=list&p='.time();
+    $wpdb->insert( $wpdb->posts, array(
+      'post_content' => '',
+      'post_excerpt' => '',
+      'post_title' => __( 'Most Recent' ),
+      /* translators: Default page slug */
+      'post_name' => __( 'Most Recent' ),
+      'guid' => $first_list_guid,
+      'post_type' => 'list',
+      'sticky' => true,
+      'to_ping' => '',
+      'pinged' => '',
+      'comment_status' => 'closed',
+      'post_content_filtered' => ''
+    ));
+
+    $list = get_posts(array('post_type' => 'list'));
+    $id = $list[0]->ID;
+
   }
 
   function set_front_page() {
