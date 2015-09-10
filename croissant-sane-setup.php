@@ -1,11 +1,11 @@
 <?php
 
 /*
-Plugin Name: WP Sane Setup
-Plugin URI: http://github.com/jonsherrard/wp-sane-setup
+Plugin Name: Croissant Sane Setup
+Plugin URI: https://bitbucket.org/ShortlistMedia/croissant-sane-setup
 Description: Set sane defaults on an initial WordPress Install
-Version: 0.2.2
-Author: Jon Sherrard
+Version: 0.1.0
+Author: Jon Sherrard & Gareth Foote
 Author URI: http://twitter.com/jshez
 License: GPL2
 */
@@ -63,6 +63,7 @@ class SaneSetup  {
     $this->set_start_of_week();
     $this->update_permalinks();
     $this->disable_emojis();
+    $this->create_list();
     update_option( 'sane_setup', '1' );
   }
 
@@ -122,6 +123,7 @@ class SaneSetup  {
 
   function create_list() {
 
+    // Create a default 'List' if one doesn't exist using the sensible_category from above.
     $lists = get_posts(array('post_type' => 'list'));
     if(count($lists) >= 1) {
       return;
@@ -133,16 +135,16 @@ class SaneSetup  {
       return;
     }
 
+    global $wpdb;
     $first_list_guid = get_option('home') . '/?post_type=list&p='.time();
     $wpdb->insert( $wpdb->posts, array(
       'post_content' => '',
       'post_excerpt' => '',
       'post_title' => __( 'Most Recent' ),
       /* translators: Default page slug */
-      'post_name' => __( 'Most Recent' ),
+      'post_name' => __( 'most-recent' ),
       'guid' => $first_list_guid,
       'post_type' => 'list',
-      'sticky' => true,
       'to_ping' => '',
       'pinged' => '',
       'comment_status' => 'closed',
@@ -151,6 +153,30 @@ class SaneSetup  {
 
     $list = get_posts(array('post_type' => 'list'));
     $id = $list[0]->ID;
+
+    /*
+    $wpdb->insert( $wpdb->postmeta, array(
+      'post_id' => $id,
+      'meta_key' => 'sections',
+      'meta_value' => serialize(array(1)),
+    ));
+    $wpdb->insert( $wpdb->postmeta, array(
+      'post_id' => $id,
+      'meta_key' => '_sections',
+      'meta_value' => 'list_sections',
+    ));
+     */
+
+    $wpdb->insert( $wpdb->postmeta, array(
+      'post_id' => $id,
+      'meta_key' => 'limit',
+      'meta_value' => 50,
+    ));
+    $wpdb->insert( $wpdb->postmeta, array(
+      'post_id' => $id,
+      'meta_key' => '_limit',
+      'meta_value' => 'list_limit',
+    ));
 
   }
 
