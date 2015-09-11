@@ -14,6 +14,8 @@ NB: This plugin only makes changes to the database, nothing is hardcoded.
  - Set the start of the week to Monday
  - Set default permalinks to `/category/post-name`
  - Disable emojis
+ - Adds default 'List' post
+ - Changes default theme to agreable-app-theme
 
 ## UI
 
