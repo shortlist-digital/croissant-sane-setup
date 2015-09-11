@@ -154,19 +154,6 @@ class SaneSetup  {
     $list = get_posts(array('post_type' => 'list'));
     $id = $list[0]->ID;
 
-    /*
-    $wpdb->insert( $wpdb->postmeta, array(
-      'post_id' => $id,
-      'meta_key' => 'sections',
-      'meta_value' => serialize(array(1)),
-    ));
-    $wpdb->insert( $wpdb->postmeta, array(
-      'post_id' => $id,
-      'meta_key' => '_sections',
-      'meta_value' => 'list_sections',
-    ));
-     */
-
     $wpdb->insert( $wpdb->postmeta, array(
       'post_id' => $id,
       'meta_key' => 'limit',
