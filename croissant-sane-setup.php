@@ -129,12 +129,6 @@ class SaneSetup  {
     if(count($lists) >= 1) {
       return;
     }
-    // If list not registered post type then return.
-    $types = get_post_types();
-    if(!in_array('list', $types)){
-      $this->show_notice('Sane setup could not create a List because Custom Post Type of List is not registered. Is the Croissant theme activated yet?', 'updated error');
-      return;
-    }
 
     global $wpdb;
     $first_list_guid = get_option('home') . '/?post_type=list&p='.time();
