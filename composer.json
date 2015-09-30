@@ -1,5 +1,5 @@
 {
-  "name": "shortlist-media/croissant-sane-setup",
+  "name": "shortlist-digital/croissant-sane-setup",
   "type": "wordpress-plugin",
   "description": "Make some sensible setup changes to a new WordPress installation",
   "license": "GPLv2",
