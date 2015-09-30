@@ -1,4 +1,4 @@
-# WP Sane Setup
+# WP Croissant Sane Setup
 
 Make some sensible setup changes to a new WordPress installation.
 
