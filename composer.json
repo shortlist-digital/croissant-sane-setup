@@ -1,12 +1,12 @@
 {
-    "name": "ShortlistMedia/croissant-sane-setup",
-    "type": "wordpress-plugin",
-    "description": "Make some sensible setup changes to a new WordPress installation",
-    "license": "GPLv2",
-    "authors": [
-        {
-            "name": "Jon Sherrard",
-            "email": "jon@andthats.it"
-        }
-    ]
+  "name": "shortlist-media/croissant-sane-setup",
+  "type": "wordpress-plugin",
+  "description": "Make some sensible setup changes to a new WordPress installation",
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "Jon Sherrard",
+      "email": "j@andthats.it"
+    }
+  ]
 }
